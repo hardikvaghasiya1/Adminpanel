@@ -29,15 +29,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function Medicine(props) {
     const [open, setOpen] = useState(false);
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [quntity, setQuntity] = useState('');
-    const [expiry, setExpiry] = useState('');
     const [data, setData] = useState([]);
     const [dopen, setDopen] = useState(false);
     const [did, setDid] = useState();
     const [update, setUpdate] = useState(false);
     const [uid, setUid] = useState();
+    const [searchdata, setSearchdata] = useState();
 
 
 
@@ -62,7 +59,7 @@ function Medicine(props) {
             quntity: value.quntity,
             expiry: value.expiry
         }
-        console.log(name, price, quntity, expiry);
+        // console.log(name, price, quntity, expiry);
 
 
 
@@ -75,11 +72,8 @@ function Medicine(props) {
             localStorage.setItem("medicine", JSON.stringify(localdata));
         }
         handleClose();
-        setName('');
-        setPrice('');
-        setQuntity('');
-        setExpiry('');
         showData();
+        formik.resetForm();
     };
 
     const handleDelete = () => {
@@ -105,22 +99,21 @@ function Medicine(props) {
         setUpdate(true);
     }
 
-    const handleupdate = (value) =>{
+    const handleupdate = (value) => {
         console.log(uid);
         let udata = JSON.parse(localStorage.getItem('medicine'));
         console.log(udata);
-        let editdata = udata.map((l) =>{
-            if(l.id === uid){
+        let editdata = udata.map((l) => {
+            if (l.id === uid) {
                 console.log(uid);
-                return(
-                    {id:uid, ...value}
+                return (
+                    { id: uid, ...value }
                 )
-                }
-                else{
-                        return l;
-                    }
-
             }
+            else {
+                return l;
+            }
+        }
 
         );
         localStorage.setItem("medicine", JSON.stringify(editdata));
@@ -183,14 +176,45 @@ function Medicine(props) {
         },
         validationSchema: schema,
         onSubmit: value => {
-            if(update){
+            if (update) {
                 handleupdate(value);
             }
-            else{
+            else {
                 handleSubmit(value);
             }
         },
     });
+
+    const handleSearch = (searchvalue) => {
+        let localdata = JSON.parse(localStorage.getItem('medicine'));
+        let filtervalue = localdata.filter((f) => 
+            f.id.toString().includes(searchvalue) ||
+            f.name.toString().toLowerCase().includes(searchvalue.toLowerCase()) ||
+            f.price.toString().includes(searchvalue) ||
+            f.quntity.toString().includes(searchvalue) ||
+            f.expiry.toString().includes(searchvalue)
+        );
+
+        console.log(filtervalue);
+        if (filtervalue.length === 0) {
+            setSearchdata([]);
+        } else {
+            setSearchdata(filtervalue);
+        }
+        
+    }
+
+    let searchresult;
+
+    if (searchdata === undefined) {
+        searchresult = data
+    } else if (searchdata.length > 0) {
+        searchresult = searchdata
+    } else {
+        searchresult = []
+    }
+
+    //let searchresult = searchdata.length === 0 ? [] : searchdata;
 
     return (
         <>
@@ -199,6 +223,17 @@ function Medicine(props) {
                 <Button variant="outlined" onClick={handleClickOpen}>
                     Add Medicine
                 </Button>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="name"
+                    name='name'
+                    label="Medicine name"
+                    type="name"
+                    fullWidth
+                    variant="standard"
+                    onChange={(e) => handleSearch(e.target.value)}
+                />
                 <Dialog open={open} onClose={handleClose} fullScreen>
                     <DialogTitle>Add Medicine</DialogTitle>
                     <Formik value={formik}>
@@ -269,7 +304,7 @@ function Medicine(props) {
 
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={data}
+                    rows={searchresult}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}

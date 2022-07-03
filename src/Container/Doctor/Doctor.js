@@ -20,9 +20,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function Doctor(props) {
 
     const [open, setOpen] = useState(false);
-    const [name, setName] = useState('');
-    const [degree, setDegree] = useState('');
-    const [about, setAbout] = useState('');
     const [dataobj, setDataobj] = useState([]);
     const [dopen, setDopen] = useState(false);
     const [did, setDid] = useState();
@@ -62,9 +59,6 @@ function Doctor(props) {
             localStorage.setItem("doctor", JSON.stringify(localdata));
         }
         handleClose();
-        setName('');
-        setDegree('');
-        setAbout('');
         showData();
     };
 
@@ -169,7 +163,10 @@ function Doctor(props) {
             }
             else {
                 handleSubmit(value);
+                
             }
+            
+        formik.resetForm();
         },
     });
 

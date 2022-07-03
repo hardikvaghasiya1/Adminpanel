@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import PersonIcon from '@mui/icons-material/Person';
 import {NavLink} from 'react-router-dom';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 const drawerWidth = 240;
 
@@ -100,7 +101,8 @@ export default function Layout({children}) {
   };
   let listItem = [
     {lable : 'Medicine', to : '/medicine' , icon : <MedicalServicesIcon/>},
-    {lable : 'Doctor', to : '/doctor' , icon : <PersonIcon/>}
+    {lable : 'Doctor', to : '/doctor' , icon : <PersonIcon/>},
+    {lable : 'Counter', to : '/counter' , icon : <GroupAddIcon/>}
 ]
   return (
     <Box sx={{ display: 'flex' }}>
@@ -147,8 +149,9 @@ export default function Layout({children}) {
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
                   }}
-                >
-                  {h % 2 === 0 ? <MedicalServicesIcon /> : <PersonIcon />}
+                >{
+                  l.icon
+                }
                 </ListItemIcon>
                 <ListItemText primary={l.lable} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
