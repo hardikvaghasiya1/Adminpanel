@@ -5,21 +5,24 @@ import Medicine from './Container/Medicine/Medicine';
 import Layout from './Component/Layout/Layout';
 import { configuerStore } from './Redux/Store';
 import Counter from './Container/Counter/Counter';
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 
 function App() {
-  let store = configuerStore()
+  let { store, persistor } = configuerStore()
   return (
     <>
-      <Layout>
-        <Provider store={store}>
-          <Switch>
-            <Route exact path={"/doctor"} component={Doctor} />
-            <Route exact path={"/medicine"} component={Medicine} />
-            <Route exact path={"/counter"} component={Counter} />
-          </Switch>
-        </Provider>
-      </Layout>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <Layout>
+            <Switch>
+              <Route exact path={"/doctor"} component={Doctor} />
+              <Route exact path={"/medicine"} component={Medicine} />
+              <Route exact path={"/counter"} component={Counter} />
+            </Switch>
+          </Layout>
+        </PersistGate>
+      </Provider>
     </>
   );
 }
