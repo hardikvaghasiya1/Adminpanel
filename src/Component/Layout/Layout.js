@@ -102,7 +102,8 @@ export default function Layout({children}) {
   let listItem = [
     {lable : 'Medicine', to : '/medicine' , icon : <MedicalServicesIcon/>},
     {lable : 'Doctor', to : '/doctor' , icon : <PersonIcon/>},
-    {lable : 'Counter', to : '/counter' , icon : <GroupAddIcon/>}
+    {lable : 'Counter', to : '/counter' , icon : <GroupAddIcon/>},
+    {lable : 'Promises', to : '/promises' , icon : <PersonIcon/>}
 ]
   return (
     <Box sx={{ display: 'flex' }}>

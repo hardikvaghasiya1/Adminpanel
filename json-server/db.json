@@ -22,11 +22,18 @@
       "expiry": "2020"
     }
   ],
-  "comments": [
+  "doctor": [
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "name": "Demo",
+      "degree": "Phisio",
+      "about": "I Am Doctor"
+    },
+    {
+      "id": 2,
+      "name": "Demo1",
+      "degree": "Phisio",
+      "about": "I Am Doctor"
     }
   ],
   "profile": {

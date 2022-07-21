@@ -12,6 +12,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
+import { deletedoctor, getdoctor, postdoctor, updatedoctor } from '../../Redux/Action/doctor.action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -45,36 +47,41 @@ function Doctor(props) {
 
     let handleSubmit = (value) => {
         let dataobj = {
-            id: Math.floor(Math.random() * 1000),
+            // id: Math.floor(Math.random() * 1000),
             name: value.name,
             degree: value.degree,
             about: value.about
         }
-        var localdata = JSON.parse(localStorage.getItem('doctor'));
-        if (localdata === null) {
-            localStorage.setItem("doctor", JSON.stringify([dataobj]));
-        }
-        else {
-            localdata.push(dataobj);
-            localStorage.setItem("doctor", JSON.stringify(localdata));
-        }
+
+        // console.log(dataobj);
+        dispatch(postdoctor(dataobj))
+        // var localdata = JSON.parse(localStorage.getItem('doctor'));
+        // if (localdata === null) {
+        //     localStorage.setItem("doctor", JSON.stringify([dataobj]));
+        // }
+        // else {
+        //     localdata.push(dataobj);
+        //     localStorage.setItem("doctor", JSON.stringify(localdata));
+        // }
         handleClose();
-        showData();
+        // showData();
     };
 
     const handleDelete = () => {
-        var localdata = JSON.parse(localStorage.getItem("doctor"));
-        console.log(localdata);
-        let ddata = localdata.filter((l, i) => l.id !== did.id);
-        localStorage.setItem("doctor", JSON.stringify(ddata));
+        // var localdata = JSON.parse(localStorage.getItem("doctor"));
+        // console.log(localdata);
+        // let ddata = localdata.filter((l, i) => l.id !== did.id);
+        // localStorage.setItem("doctor", JSON.stringify(ddata));
+        dispatch(deletedoctor(did.id))
         handleClose();
         setDid();
-        showData();
+        // showData();
     };
 
     const handleedit = (params) => {
         // console.log(params.row);
         formik.setValues({
+            id:params.row.id,
             name: params.row.name,
             degree: params.row.degree,
             about: params.row.about,
@@ -85,41 +92,50 @@ function Doctor(props) {
     }
 
     const handleupdate = (value) => {
-        console.log(uid);
-        let udata = JSON.parse(localStorage.getItem('doctor'));
-        console.log(udata);
-        let editdata = udata.map((l) => {
-            if (l.id === uid) {
-                console.log(uid);
-                return (
-                    { id: uid, ...value }
-                )
-            }
-            else {
-                return l;
-            }
+        // console.log(uid);
+        // let udata = JSON.parse(localStorage.getItem('doctor'));
+        // console.log(udata);
+        // let editdata = udata.map((l) => {
+        //     if (l.id === uid) {
+        //         console.log(uid);
+        //         return (
+        //             { id: uid, ...value }
+        //         )
+        //     }
+        //     else {
+        //         return l;
+        //     }
 
-        }
+        // }
 
-        );
-        localStorage.setItem("doctor", JSON.stringify(editdata));
-        console.log("Update successfully");
-        showData();
+        // );
+        // localStorage.setItem("doctor", JSON.stringify(editdata));
+        // console.log("Update successfully");
+        // // showData();
+
+
+
+        console.log(value)
+        dispatch(updatedoctor(value));
         handleClose();
     }
 
 
-    const showData = () => {
-        let localData = JSON.parse(localStorage.getItem("doctor"))
+    // const showData = () => {
+    //     let localData = JSON.parse(localStorage.getItem("doctor"))
 
-        if (localData !== null) {
-            setDataobj(localData)
-        }
-    }
+    //     if (localData !== null) {
+    //         setDataobj(localData)
+    //     }
+    // }
+
+    const dispatch = useDispatch()
+    const doctor = useSelector(state => state.doctors)
+    console.log(doctor.doctor)
 
     useEffect(
         () => {
-            showData();
+            dispatch(getdoctor());
         },
         [])
 
@@ -232,7 +248,7 @@ function Doctor(props) {
 
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        rows={dataobj}
+                        rows={doctor.doctor}
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
