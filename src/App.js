@@ -8,6 +8,8 @@ import Counter from './Container/Counter/Counter';
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import Promises from './Container/Promises/Promises';
+import MemoExample from './Container/UseMemo/MemoExample';
+import UseCallBackFun from './Container/UseCallBackFun/UseCallBackFun';
 
 function App() {
   let { store, persistor } = configuerStore()
@@ -21,6 +23,8 @@ function App() {
               <Route exact path={"/medicine"} component={Medicine} />
               <Route exact path={"/counter"} component={Counter} />
               <Route exact path={"/promises"} component={Promises} />
+              <Route exact path={"/memoexample"} component={MemoExample} />
+              <Route exact path={"/usecallbackfun"} component={UseCallBackFun} />
             </Switch>
           </Layout>
         </PersistGate>

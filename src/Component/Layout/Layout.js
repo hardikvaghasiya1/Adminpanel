@@ -103,7 +103,9 @@ export default function Layout({children}) {
     {lable : 'Medicine', to : '/medicine' , icon : <MedicalServicesIcon/>},
     {lable : 'Doctor', to : '/doctor' , icon : <PersonIcon/>},
     {lable : 'Counter', to : '/counter' , icon : <GroupAddIcon/>},
-    {lable : 'Promises', to : '/promises' , icon : <PersonIcon/>}
+    {lable : 'Promises', to : '/promises' , icon : <PersonIcon/>},
+    {lable : 'Memo', to : '/memoexample' , icon : <GroupAddIcon/>},
+    {lable : 'Memo', to : '/usecallbackfun' , icon : <GroupAddIcon/>}
 ]
   return (
     <Box sx={{ display: 'flex' }}>
