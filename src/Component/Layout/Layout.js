@@ -19,7 +19,10 @@ import ListItemText from '@mui/material/ListItemText';
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import PersonIcon from '@mui/icons-material/Person';
 import {NavLink} from 'react-router-dom';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 
 const drawerWidth = 240;
 
@@ -102,10 +105,12 @@ export default function Layout({children}) {
   let listItem = [
     {lable : 'Medicine', to : '/medicine' , icon : <MedicalServicesIcon/>},
     {lable : 'Doctor', to : '/doctor' , icon : <PersonIcon/>},
-    {lable : 'Counter', to : '/counter' , icon : <GroupAddIcon/>},
-    {lable : 'Promises', to : '/promises' , icon : <PersonIcon/>},
-    {lable : 'Memo', to : '/memoexample' , icon : <GroupAddIcon/>},
-    {lable : 'Memo', to : '/usecallbackfun' , icon : <GroupAddIcon/>}
+    {lable : 'Counter', to : '/counter' , icon : <HourglassEmptyIcon/>},
+    {lable : 'Promises', to : '/promises' , icon : <FiberManualRecordIcon/>},
+    {lable : 'Memo', to : '/memoexample' , icon : <FiberManualRecordIcon/>},
+    {lable : 'Memo', to : '/usecallbackfun' , icon : <FiberManualRecordIcon/>},
+    {lable : 'Context', to : '/context' , icon : <DarkModeIcon/>},
+    {lable : 'Patient', to : '/patient' , icon : <LocalHospitalIcon/>}
 ]
   return (
     <Box sx={{ display: 'flex' }}>
@@ -168,4 +173,4 @@ export default function Layout({children}) {
       </Box>
     </Box>
   );
-}
+} 

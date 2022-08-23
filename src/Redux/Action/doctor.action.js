@@ -2,7 +2,6 @@ import { deletedoctorapi, getdoctorapi, postdoctorapi, updatedoctorapi } from '.
 import * as ActionTypes from '../Actiontype'
 
 export const getdoctor = () => (dispatch) => {
-    console.log('Hiii')
     try{
         return getdoctorapi()
         .then((data) => dispatch(({ type: ActionTypes.GET_DOCTOR, payload: data.data})))
