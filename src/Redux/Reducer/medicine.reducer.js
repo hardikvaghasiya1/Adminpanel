@@ -5,7 +5,7 @@ const InitialState = {
     error: ''
 }
 export const medicinereducer = (state = InitialState, action) => {
-    console.log(action.payload, action);
+    // console.log(action.payload, action);
     switch (action.type) {
         case ActionTypes.LOAD_MEDICINE:
             return {

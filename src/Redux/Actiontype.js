@@ -14,3 +14,9 @@ export const GET_DOCTOR = 'GET_DOCTOR'
 export const POST_DOCTOR = 'POST_DOCTOR'
 export const DELETE_DOCTOR = 'DELETE_DOCTOR'
 export const UPDATE_DOCTOR = 'UPDATE_DOCTOR'
+
+
+export const POST_PATIENT = 'POST_PATIENT'
+export const GET_PATIENT = 'GET_PATIENT'
+export const DELETE_PATIENT='DELETE_PATIENT'
+export const UPDATE_PATIENT='UPDATE_PATIENT'

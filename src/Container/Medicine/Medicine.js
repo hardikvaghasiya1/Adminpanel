@@ -44,6 +44,7 @@ function Medicine(props) {
     };
 
     const handleClickDopen = (params) => {
+        console.log(params)
         setDopen(true);
         setDid(params.id)
     };

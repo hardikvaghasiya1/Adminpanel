@@ -7,7 +7,7 @@ const intialState = {
 }
 
 export const doctorReducer = (state = intialState, action) => {
-    console.log(action.payload, action)
+    // console.log(action.payload, action)
     switch (action.type) {
         case ActionTypes.GET_DOCTOR:
             return {
