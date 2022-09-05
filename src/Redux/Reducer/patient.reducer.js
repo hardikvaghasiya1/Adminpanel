@@ -40,7 +40,7 @@ export const patientReducer = (state = initialState, action) => {
                         return action.payload
                     }
                     else{
-                        return l;
+                        return l;   
                     }
                 }),
                 error: ''

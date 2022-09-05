@@ -24,15 +24,17 @@ function Patient(props) {
 
     const [open, setOpen] = useState(false);
     const [dopen, setDopen] = useState(false);
-    const [did, setDid] = useState('');
+    const [ddata, setDdata] = useState('');
     const [udata, setUdata] = useState(false);
     const [uid, setUid] = useState(false);
+    const [firstname , setFirstName] = useState();
 
 
 
     const dispatch = useDispatch();
     const patient = useSelector(state => state.patient)
-    // console.log(patient.patient)
+    const patientdata = patient.patient;
+    console.log(patient.patient)
 
 
 
@@ -44,7 +46,7 @@ function Patient(props) {
     };
 
     const handleClickDopen = (params) => {
-        setDid(params.id)
+        setDdata(params.row)
         setDopen(true);
     }
 
@@ -58,12 +60,13 @@ function Patient(props) {
 
 
 
-    const handleinsert = (values) => {
+    const   handleinsert = (values) => {
         let dataobj = {
             name: values.name,
             email: values.email,
             age: values.age,
-            phonenumber: values.phonenumber
+            phonenumber: values.phonenumber,
+            file: values.file
         }
 
         dispatch(addpatienaction(dataobj));
@@ -75,27 +78,32 @@ function Patient(props) {
 
 
     const handledelete = () => {
-        dispatch(deletepatientaction(did))
+        dispatch(deletepatientaction(ddata))
         handleClose();
-        setDid();
+        setDdata();
     }
 
     const handleedit = (params) => {
+        console.log(params.row);
         formik.setValues({
-            name:params.row.name,
-            email:params.row.email,
-            age:params.row.age,
-            phonenumber:params.row.phonenumber,
+            name: params.row.name,
+            email: params.row.email,
+            age: params.row.age,
+            phonenumber: params.row.phonenumber,
+            file:params.row.file
         })
         setUid(params.row.id);
+        setFirstName(params.row.fileName);
         setOpen(true);
         setUdata(true);
-        console.log(udata)
+        // console.log(udata)
     }
 
     const handleupdate = (values) => {
+        console.log(values);
         let data = {
-            id:uid,
+            id: uid,
+            fileName: firstname,
             ...values
         }
         // console.log(uid)
@@ -120,7 +128,8 @@ function Patient(props) {
         name: yup.string().required("Please Enter a Name"),
         email: yup.string().email().required("Please Enter a Email"),
         age: yup.number("Write Only Number").required("Please Enter a Age").positive("Please Enter a positive age"),
-        phonenumber: yup.number("Write Only Number").required("Please Enter a Age").positive("Please Enter a positive age").integer("please enter a value without point")
+        phonenumber: yup.number("Write Only Number").required("Please Enter a Age").positive("Please Enter a positive age").integer("please enter a value without point"),
+        file: yup.mixed().required("Please enter a file")
     });
 
 
@@ -129,16 +138,17 @@ function Patient(props) {
             name: '',
             email: '',
             age: '',
-            phonenumber: ''
+            phonenumber: '',
+            file: ''
         },
         validationSchema: schema,
         onSubmit: values => {
             if (udata) {
                 handleupdate(values)
-                console.log(values) 
-            }else{
+                // console.log(values)
+            } else {
                 handleinsert(values)
-                console.log(values)
+                // console.log(values)
             }
 
             // console.log()
@@ -153,6 +163,11 @@ function Patient(props) {
 
 
     const columns = [
+        { field: 'url', headerName: 'Profile', width: 160, 
+            renderCell: (params) => (
+             <img src={params.row.file} height={35} width={35} style={{borderRadius:18}}/>   
+            )
+        },
         { field: 'name', headerName: 'Name', width: 130 },
         { field: 'email', headerName: 'Email', width: 160 },
         { field: 'age', headerName: 'Age', type: 'number', width: 90 },
@@ -181,6 +196,7 @@ function Patient(props) {
             <div>
                 <h2>Patient List</h2>
                 <Button variant="outlined" onClick={handleClickOpen}>Add Patient</Button>
+                {/* <img src=''/> */}
             </div>
             <div>
                 <Dialog open={open} onClose={handleClose}>
@@ -232,6 +248,16 @@ function Patient(props) {
                                     onChange={formik.handleChange}
                                 />
                                 {formik.errors.phonenumber ? <p>{formik.errors.phonenumber}</p> : null}
+                                <TextField
+                                    margin="dense"
+                                    id="file"
+                                    type="file"
+                                    fullWidth
+                                    variant="standard"
+                                    value={formik.values.file}
+                                    onChange={(e) => formik.setFieldValue('file', e.target.files[0])}
+                                />
+                                {formik.errors.file ? <p>{formik.errors.file}</p> : null}
                             </DialogContent>
                             <DialogActions>
                                 <Button onClick={handleClose}>Cancel</Button>
@@ -253,9 +279,6 @@ function Patient(props) {
 
 
             <div>
-                <Button variant="outlined" onClick={handleClickOpen}>
-                    Open alert dialog
-                </Button>
                 <Dialog
                     open={dopen}
                     onClose={handleClose}
